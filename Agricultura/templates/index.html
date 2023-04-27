@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Agricultura</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <style>
+        h1{
+            text-align: center;
+        }
+        .form-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        fieldset {
+            margin: 1rem;
+        }
+    </style>
+        <h1>Formulário de Restrições</h1>
+
+    <div id="chart"></div>
+    <div id="images"></div>
+
+
+
+    <script>
+
+        function updateChart() {
+            fetch('/data')
+            .then(response => response.json())
+            .then(data => Plotly.react('chart', data));
+        }
+
+        function updateImages() {
+            fetch('/images')
+            .then(response => response.json())
+            .then(data => {
+                const imagesDiv = document.getElementById('images');
+                imagesDiv.innerHTML = '';
+                for (let i = 0; i < data.length; i++) {
+                    const img = document.createElement('img');
+                    img.src = '/static/graficos/' + data[i];
+                    imagesDiv.appendChild(img);
+                }
+            });
+        }
+
+        setInterval(updateChart, 5000);
+        setInterval(updateImages, 10000);
+    </script>
+</body>
+</html>
