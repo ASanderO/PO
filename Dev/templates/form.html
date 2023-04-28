@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Modelo de programação linear</title>
+</head>
+<body>
+	<h1>Modelo de programação linear para otimização de produção</h1>
+	<form method="POST">
+		<label for="equipe1">Horas disponíveis para a equipe 1:</label>
+		<input type="number" id="equipe1" name="equipe1"><br><br>
+		<label for="equipe2">Horas disponíveis para a equipe 2:</label>
+		<input type="number" id="equipe2" name="equipe2"><br><br>
+		<label>Selecione as habilidades dos funcionários disponíveis:</label><br>
+		<input type="checkbox" id="alex" name="habilidades" value="alex">
+		<label for="alex">Alex (Jogos)</label><br>
+		<input type="checkbox" id="devjr1" name="habilidades" value="devjr1">
+		<label for="devjr1">DevJr1 (Sistemas)</label><br>
+		<input type="checkbox" id="devsr1" name="habilidades" value="devsr1">
+		<label for="devsr1">DevSr1 (Sites)</label><br>
+		<input type="checkbox" id="hayana" name="habilidades" value="hayana">
+		<label for="hayana">Hayana (Jogos)</label><br>
+		<input type="checkbox" id="devjr2" name="habilidades" value="devjr2">
+		<label for="devjr2">DevJr2 (Sistemas)</label><br>
+		<input type="checkbox" id="devsr2" name="habilidades" value="devsr2">
+		<label for="devsr2">DevSr2 (Sites)</label><br>
+		<br>
+		<input type="submit" value="Otimizar">
+	</form>
+
+	<script>
+		// Função para atualizar o formulário quando um checkbox for desmarcado
+		const checkboxes = document.querySelectorAll('input[type=checkbox][name=habilidades]')
+		checkboxes.forEach((checkbox) => {
+			checkbox.addEventListener('change', () => {
+				// Se um checkbox foi desmarcado, atualizar as habilidades dos funcionários
+				if (!checkbox.checked) {
+					const habilidades = []
+					checkboxes.forEach((c) => {
+						if (c.checked) habilidades.push(c.value)
+					})
+					atualizarHabilidades(habilidades)
+				}
+			})
+		})
+
+		// Função para atualizar as habilidades dos funcionários
+		function atualizarHabilidades(habilidades) {
+			const equipe1 = document.getElementById('equipe1').value
+			const equipe2 = document.getElementById('equipe2').value
+			const form = document.querySelector('form')
+			const hidden = document.createElement('input')
+			hidden.setAttribute('type', 'hidden')
+			hidden.setAttribute('name', 'equipe1')
+			hidden.setAttribute('value', equipe1)
+			form.appendChild(hidden)
+			const hidden2 = document.createElement('input')
+			hidden2.setAttribute('type', 'hidden')
+			hidden2.setAttribute('name', 'equipe2')
+			hidden2.setAttribute('value','equipe2')
+            			hidden2.setAttribute('value', equipe2)
+			form.appendChild(hidden2)
+			habilidades.forEach((habilidade) => {
+				const hidden = document.createElement('input')
+				hidden.setAttribute('type', 'hidden')
+				hidden.setAttribute('name', 'habilidades')
+				hidden.setAttribute('value', habilidade)
+				form.appendChild(hidden)
+			})
+			form.submit()
+		}
+	</script>
+</body>
+</html>
+
