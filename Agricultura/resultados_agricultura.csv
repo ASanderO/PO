@@ -1,5 +1,7 @@
 Mes,Area 1,Produto A1,Area 2,Produto A2,Area 3,Produto A3,Vazamento,Sobrando
 
-outros,419.57143,Café,279.71429,Sorgo,279.71429,Cana-de-açúcar,21,-1.0000000088439265e-05
-abril,235.5,Feijão,353.25,Algodão,353.25,Cevada,58,0.0
-dezembro,211.55556,Girassol,317.33333,Feijão,423.11111,Milho,48,0.0
+dezembro,212.66667,Girassol,319.0,Feijão,425.33333,Milho,43,0.0
+abril,249.0,Feijão,373.5,Algodão,373.5,Cevada,4,0.0
+abril,249.25,Feijão,373.875,Algodão,373.875,Cevada,3,0.0
+outros,410.14286,Café,273.42857,Sorgo,273.42857,Cana-de-açúcar,43,0.0
+outros,403.71429,Café,269.14286,Sorgo,269.14286,Cana-de-açúcar,58,-9.999999974752427e-06

@@ -3,8 +3,6 @@ import random
 import matplotlib.pyplot as plt
 import csv
 import pandas as pd
-import plotly.express as px
-import plotly.io as pio
 from datetime import datetime
 import matplotlib as mpl
 import alert
