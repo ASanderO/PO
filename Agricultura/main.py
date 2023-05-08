@@ -6,7 +6,6 @@ import pandas as pd
 from datetime import datetime
 import matplotlib as mpl
 import alert
-from flask import Flask, request, render_template_string, redirect, url_for
 import os
 
 def exibir_grafico(resultados, produtos_mes, vazamento_agua, agua_sobrando, mes):

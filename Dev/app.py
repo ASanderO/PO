@@ -24,7 +24,6 @@ print("Status da solução:", LpStatus[prob.status])
 # Imprime o valor ótimo da função objetivo
 print("Valor ótimo da função objetivo:", value(prob.objective))
 
-# Imprime as quantidades de jogos, sistemas e sites produzidos
 # Imprime as horas gastas e restantes para produção dos projetos
 print("Horas gastas e restantes:")
 print("Equipe 1: gastas =", 2*X1.value() + X2.value() + X3.value(), "restantes =", 176 - (2*X1.value() + X2.value() + X3.value()))
