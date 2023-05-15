@@ -15,6 +15,10 @@ prob += 50*X1 + 30*X2 + 20*X3
 prob += 2*X1 + X2 + X3 <= 176
 prob += X1 + 2*X2 + X3 <= 132
 
+prob += X1 >= 0
+prob += X2 >= 0
+prob += X3 >= 0
+
 # Resolve o problema
 prob.solve()
 
