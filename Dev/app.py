@@ -1,38 +1,38 @@
-from pulp import *
+from scipy.optimize import linprog
 
-# Cria o problema para maximização
-prob = LpProblem("MaximizarLucro", LpMaximize)
+# Definindo os coeficientes da função objetivo
+c = [-50, -30, -20]  # Coeficientes negativos para maximizar
 
-# Define as variáveis de decisão
-X1 = LpVariable("jogos", lowBound=0, cat='Integer')
-X2 = LpVariable("sistemas", lowBound=0, cat='Integer')
-X3 = LpVariable("sites", lowBound=0, cat='Integer')
+# Definindo a matriz de restrições
+A = [[2, 1, 1], [1, 2, 1]]  # Coeficientes das restrições
+b = [176, 132]  # Lados direitos das restrições
 
-# Define a função objetivo a ser maximizada
-prob += 50*X1 + 30*X2 + 20*X3
+# Definindo os limites das variáveis
+bounds = [(0, None), (0, None), (0, None)]  # Limites inferiores e superiores para as variáveis
 
-# Define as restrições de capacidade da equipe 1 e 2
-prob += 2*X1 + X2 + X3 <= 176
-prob += X1 + 2*X2 + X3 <= 132
+# Resolvendo o problema de maximização
+result = linprog(c, A_ub=A, b_ub=b, bounds=bounds, method='highs')
 
-prob += X1 >= 0
-prob += X2 >= 0
-prob += X3 >= 0
+# Verificando se a solução é ótima
+if result.success:
+    # Extraindo as quantidades de jogos, sistemas e sites produzidos
+    x1, x2, x3 = result.x
+    print("Quantidade de jogos produzidos:", int(x1))
+    print("Quantidade de sistemas produzidos:", int(x2))
+    print("Quantidade de sites produzidos:", int(x3))
+    print("Lucro máximo:", -result.fun)  # Convertendo o valor negativo para positivo
 
-# Resolve o problema
-prob.solve()
+    # Calculando as horas consumidas por cada equipe
+    equipe1_horas = 2 * x1 + x2 + x3
+    equipe2_horas = x1 + 2 * x2 + x3
 
-# Imprime o status da solução
-print("Status da solução:", LpStatus[prob.status])
+    # Calculando as horas restantes por cada equipe
+    equipe1_horas_restantes = 176 - equipe1_horas
+    equipe2_horas_restantes = 132 - equipe2_horas
 
-# Imprime o valor ótimo da função objetivo
-print("Valor ótimo da função objetivo:", value(prob.objective))
-
-# Imprime as horas gastas e restantes para produção dos projetos
-print("Horas gastas e restantes:")
-print("Equipe 1: gastas =", 2*X1.value() + X2.value() + X3.value(), "restantes =", 176 - (2*X1.value() + X2.value() + X3.value()))
-print("Equipe 2: gastas =", X1.value() + 2*X2.value() + X3.value(), "restantes =", 132 - (X1.value() + 2*X2.value() + X3.value()))
-print("Quantidades produzidas:")
-print("Jogos =", X1.value())
-print("Sistemas =", X2.value())
-print("Sites =", X3.value())
+    print("Horas consumidas pela Equipe 1:", equipe1_horas)
+    print("Horas consumidas pela Equipe 2:", equipe2_horas)
+    print("Horas restantes da Equipe 1:", equipe1_horas_restantes)
+    print("Horas restantes da Equipe 2:", equipe2_horas_restantes)
+else:
+    print("O problema não possui solução ótima.")
