@@ -61,7 +61,7 @@ def salvar_resultados_csv(mes, resultados, produtos_mes, vazamento_agua, agua_so
         csv_writer.writerow(row)
 
 
-def resolve_otimizacao(restricoes_mes, produtos_mes):
+def minimizar_gasto_agua(restricoes_mes, produtos_mes):
     vazamento_agua = random.randint(1, 100)
     print(f"Vazamento de água: {vazamento_agua} litros")
     agua_disponivel = 1000 - vazamento_agua
@@ -74,7 +74,7 @@ def resolve_otimizacao(restricoes_mes, produtos_mes):
         minimo_novo = minimo * proporcao
         restricoes_atualizadas[k] = (minimo_novo, maximo)
 
-    prob = pulp.LpProblem("Minimizar_desperdicio_de_agua", pulp.LpMinimize)
+    prob = pulp.LpProblem("Minimizar_gasto_agua", pulp.LpMinimize)
 
     X1 = pulp.LpVariable("X1", lowBound=restricoes_atualizadas["X1"][0], upBound=restricoes_atualizadas["X1"][1],
                          cat="Continuous")
@@ -105,7 +105,6 @@ def resolve_otimizacao(restricoes_mes, produtos_mes):
     exibir_grafico((X1.varValue, X2.varValue, X3.varValue), produtos_mes, vazamento_agua, agua_sobrando, mes)
     salvar_resultados_csv(mes, (X1.varValue, X2.varValue, X3.varValue), produtos_mes, vazamento_agua, agua_sobrando)
 
-
 restricoes = {
     "abril": {"X1": (200, 400), "X2": (300, 500), "X3": (300, 500)},
     "setembro": {"X1": (300, 400), "X2": (300, 400), "X3": (200, 400)},
@@ -125,4 +124,4 @@ mes = input("Digite o mês de plantio (exemplo: abril, setembro, dezembro, outro
 if mes not in restricoes:
     print("Mês inválido. Use 'abril', 'setembro', 'dezembro' ou 'outros'.")
 else:
-    resolve_otimizacao(restricoes[mes], produtos[mes])
+    minimizar_gasto_agua(restricoes[mes], produtos[mes])
